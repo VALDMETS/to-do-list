@@ -32,7 +32,7 @@ function getAllItems (response) {
 }
 function divBuilder (item, i, arr) {
   // if (item.complete === "false") {
-    $('.mainview').append('<div class="todoitem"><input type="button" class="complete-button" data-id="' + item._id + '" data-done="' + item.complete + '" value="check"><h5>' + item.title + '</h5><p>' + item.details + '</p><input type="button" class="trash-button" data-id="' + item._id + '" value="trash"></div>');
+    $('.mainview').append('<div class="todoitem"><input type="button" class="complete-button" data-id="' + item._id + '" data-done="' + item.complete + '"><h5>' + item.title + '</h5><p>' + item.details + '</p><input type="button" class="trash-button" data-id="' + item._id + '"></div>');
   // }
 }
 
@@ -52,7 +52,7 @@ function completeClick (evt) {
       currentTarget = Object.assign(currentTarget, {data: {complete: true}});
       console.log('made true');
       evt.target.dataset.done = "true";
-      $(evt.target).parent().addClass('hide');
+      // $(evt.target).parent().addClass('hide');
   }
   $.ajax(currentTarget);
 }
@@ -68,6 +68,7 @@ function trashClick (evt) {
   };
   $(evt.target).parent().addClass('hide');
   $.ajax(currentTarget);
+  $.ajax(initPage);
 }
 
 

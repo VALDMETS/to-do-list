@@ -31,9 +31,11 @@ function getAllItems (response) {
 
 }
 function divBuilder (item, i, arr) {
-  // if (item.complete === "false") {
+    if (item.complete === "false") {
     $('.mainview').append('<div class="todoitem"><input type="button" class="complete-button" data-id="' + item._id + '" data-done="' + item.complete + '"><h5>' + item.title + '</h5><p>' + item.details + '</p><input type="button" class="trash-button" data-id="' + item._id + '"></div>');
-  // }
+    } else if (item.complete === "true") {
+        $('.mainview').append('<div class="todoitem grayed"><input type="button" class="complete-button" data-id="' + item._id + '" data-done="' + item.complete + '"><h5>' + item.title + '</h5><p>' + item.details + '</p><input type="button" class="trash-button" data-id="' + item._id + '"></div>');
+    }
 }
 
 function completeClick (evt) {
@@ -42,7 +44,9 @@ function completeClick (evt) {
     url: 'http://tiny-za-server.herokuapp.com/collections/benstodo/' + evt.target.dataset.id,
     type: 'PUT',
     dataType: 'json',
-    success: {}
+    success: function(){
+        $.ajax(initPage);
+    }
   };
   if (evt.target.dataset.done === "true") {
       currentTarget = Object.assign(currentTarget, {data: {complete: false}});
@@ -54,6 +58,7 @@ function completeClick (evt) {
       evt.target.dataset.done = "true";
       // $(evt.target).parent().addClass('hide');
   }
+  $(evt.target).parent().addClass('hide');
   $.ajax(currentTarget);
 }
 function trashClick (evt) {
@@ -64,11 +69,11 @@ function trashClick (evt) {
     dataType: 'json',
     success: function (){
       console.log('wow wee');
+      $.ajax(initPage);
     }
   };
   $(evt.target).parent().addClass('hide');
   $.ajax(currentTarget);
-  $.ajax(initPage);
 }
 
 

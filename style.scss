@@ -15,32 +15,31 @@ header {
   height: 100px;
   background-color: $lighter;
   margin-bottom: 20px;
-  border-bottom: 1px solid $text;
+  border-bottom: 1px solid white;
 }
 h1 {
   margin: 0;
   text-align: left;
   padding: 30px 0 0 5%;
+  font-size: 40px;
+  color: white;
+  text-shadow: 2px 2px $text;
 }
 main {
-  background-color: brown;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 .sidebar {
   display: block;
-  background-color: blue;
   width: 30%;
   min-width: 300px;
-  height: 100vw;
   float: left;
 }
 .mainview {
+  margin-left: 20px;
   display: block;
-  // background-color: purple;
   width: 60%;
-  height: 100vw;
   float: left;
 }
 
@@ -93,4 +92,50 @@ main {
 .hide {
   display: none;
   font-size: 0;
+}
+
+.sidebox {
+  width: 100%;
+  background-color: $lighter;
+  border-radius: 10px;
+  margin: 0 0 20px 10px;
+  border: 1px solid white;
+
+  h4 {
+    margin: 4px 0 0 0;
+    color: white;
+    text-shadow: 2px 2px $text;
+    font-size: 26px;
+    text-align: center;
+  }
+}
+.input-box input {
+  width: 90%;
+  background-color: white;
+  font-size: 16px;
+  padding: 4px;
+  margin: 10px 0 10px 4%;
+}
+.input-box #new-submit, .filter-setting input {
+  width: 75%;
+  display: block;
+  margin: 11px auto;
+  border-radius: 10px;
+
+}
+.filter-setting input {
+  background-color: white;
+  font-size: 16px;
+  padding: 2px 0;
+
+}
+
+.grayed {
+  background-color: $gray;
+  color: gray;
+  .complete-button {
+    background-color: gray;
+    background-image: none;
+    border-radius: 50%;
+  }
 }

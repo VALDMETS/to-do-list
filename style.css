@@ -22,9 +22,17 @@ main {
 .todoitem {
   width: 90%;
   background-color: gray; }
-  .todoitem input {
+  .todoitem .complete-button {
     display: inline-block; }
   .todoitem h5 {
     display: inline-block; }
+  .todoitem p {
+    display: inline-block; }
+  .todoitem .trash-button {
+    display: inline-block; }
+
+.hide {
+  display: none;
+  font-size: 0; }
 
 /*# sourceMappingURL=style.css.map */

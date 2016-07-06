@@ -1,36 +1,48 @@
-$.ajax({
+var currentTarget = {};
+var filterCheck = 1;
+var filteredResponse = {};
+var allItems = [];
+var initPage = {
   url: 'http://tiny-za-server.herokuapp.com/collections/benstodo',
   type: 'GET',
   dataType: 'json',
   success: getAllItems
-});
-var allItems = [];
+};
+
+$.ajax(initPage);
+
 function getAllItems (response) {
-  var allItems = response.map(function(item){
-    return item;
-  });
-  console.log(allItems);
+  if (filterCheck === 0 ) {
+    filteredResponse = response;
+  } else if (filterCheck === 1) {
+    filteredResponse = response.filter(function(item){
+      return item.complete === "false";
+    });
+  } else if (filterCheck === 2) {
+    filteredResponse = response.filter(function(item){
+      return item.complete === "true";
+    });
+  }
+  console.log(filteredResponse);
   $('.mainview').html('');
-  allItems.forEach(divBuilder);
-  $('input').click(completeClick);
+  filteredResponse.forEach(divBuilder);
+  $('.complete-button').click(completeClick);
+  $('.trash-button').click(trashClick);
 
 }
-
 function divBuilder (item, i, arr) {
   // if (item.complete === "false") {
-    $('.mainview').append('<div class="todoitem"><input type="button" data-id="' + item._id + '" data-done="' + item.complete + '" value=""><h5>' + item.title + '</h5><p>' + item.details + '</p></div>');
+    $('.mainview').append('<div class="todoitem"><input type="button" class="complete-button" data-id="' + item._id + '" data-done="' + item.complete + '" value="check"><h5>' + item.title + '</h5><p>' + item.details + '</p><input type="button" class="trash-button" data-id="' + item._id + '" value="trash"></div>');
   // }
 }
 
 function completeClick (evt) {
-  console.log(evt.target.dataset.id);
-  var currentTarget = {
+  // console.log(evt.target.dataset.id);
+  currentTarget = {
     url: 'http://tiny-za-server.herokuapp.com/collections/benstodo/' + evt.target.dataset.id,
     type: 'PUT',
     dataType: 'json',
-    success: function (){
-      console.log('i did it!');
-    }
+    success: {}
   };
   if (evt.target.dataset.done === "true") {
       currentTarget = Object.assign(currentTarget, {data: {complete: false}});
@@ -40,6 +52,56 @@ function completeClick (evt) {
       currentTarget = Object.assign(currentTarget, {data: {complete: true}});
       console.log('made true');
       evt.target.dataset.done = "true";
+      $(evt.target).parent().addClass('hide');
   }
   $.ajax(currentTarget);
 }
+function trashClick (evt) {
+  console.log('clik trash');
+  currentTarget = {
+    url: 'http://tiny-za-server.herokuapp.com/collections/benstodo/' + evt.target.dataset.id,
+    type: 'DELETE',
+    dataType: 'json',
+    success: function (){
+      console.log('wow wee');
+    }
+  };
+  $(evt.target).parent().addClass('hide');
+  $.ajax(currentTarget);
+}
+
+
+$('#new-submit').click(function(evt){
+  console.log($('#new-title')[0].value);
+  console.log($('#new-details')[0].value);
+  currentTarget = {
+    url: 'http://tiny-za-server.herokuapp.com/collections/benstodo',
+    type: 'POST',
+    dataType: 'application/json',
+    data: {
+      complete: false,
+      title: $('#new-title')[0].value,
+      details: $('#new-details')[0].value
+    },
+    success: function () {
+      console.log('wow wee');
+    }
+  };
+  $.ajax(currentTarget);
+  $.ajax(initPage);
+  $('#new-title')[0].value = '';
+  $('#new-details')[0].value = '';
+});
+
+$('#showneed').click(function(){
+  filterCheck = 1;
+  $.ajax(initPage);
+});
+$('#showdone').click(function(){
+  filterCheck = 2;
+  $.ajax(initPage);
+});
+$('#showall').click(function(){
+  filterCheck = 0;
+  $.ajax(initPage);
+});

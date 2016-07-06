@@ -1,3 +1,32 @@
-body {
-  background: blue;
+main {
+  background-color: brown;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.sidebar {
+  display: block;
+  background-color: blue;
+  width: 30%;
+  min-width: 300px;
+  height: 100vw;
+  float: left;
+}
+.mainview {
+  display: block;
+  background-color: purple;
+  width: 60%;
+  height: 100vw;
+  float: left;
+}
+
+.todoitem {
+  width: 90%;
+  background-color: gray;
+  input {
+    display: inline-block;
+  }
+  h5 {
+    display: inline-block;
+  }
 }
